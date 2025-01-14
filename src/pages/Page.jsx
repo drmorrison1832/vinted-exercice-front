@@ -5,7 +5,7 @@ const Item = (props) => {
   const { id } = useParams();
 
   return (
-    <div className="generic-component">
+    <div className="">
       <h1>param is {id}</h1>
       <Link to="/">Back to home</Link>
     </div>

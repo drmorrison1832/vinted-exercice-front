@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import BannerSection from "../Components/BannerSection";
 import ItemsShowcase from "../Components/ItemsShowcase";
 
-const MainPage = () => {
+const HomePage = () => {
   return (
-    <div className="generic-component">
+    <div className="">
       <BannerSection />
       <ItemsShowcase />
     </div>
   );
 };
 
-export default MainPage;
+export default HomePage;

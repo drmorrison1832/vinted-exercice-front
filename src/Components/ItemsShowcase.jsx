@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const ItemsShowcase = () => {
   return (
-    <div className="item-showcase">
+    <div className="items-showcase">
       <h2>Lorem ipsum</h2>
 
       <Link to="/items/item-1">
