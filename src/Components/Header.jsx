@@ -24,7 +24,7 @@ const Header = () => {
           </div>
           <div className="price-range-bar">
             <div>Prix entre :</div>
-            <div>----o--------------</div>
+            <div>———O———————</div>
           </div>
         </div>
       </div>

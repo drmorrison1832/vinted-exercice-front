@@ -20,17 +20,44 @@ import axios from "axios";
 function App() {
   // <Router> is in main.jsx
 
-  const [data, setData] = useState();
+  const [catalogue, setCatalogue] = useState();
   const [mustRetrieve, setMustRetrieve] = useState(true);
   const [retrieveError, setRetrieveError] = useState(false);
 
   async function getData() {
     try {
-      let newData = await axios.get(
+      let response = await axios.get(
         "https://lereacteur-vinted-api.herokuapp.com/offers"
       );
-      if (newData) {
-        setData(newData);
+      if (response.data) {
+        // Ici, je construis un objet plus potable
+
+        const newCatalogue = response.data.offers.map((offer, index) => {
+          return {
+            owner: {
+              id: offer.owner._id,
+              username: offer.owner.account.username,
+              avatar:
+                offer.owner.account.avatar &&
+                offer.owner.account.avatar.secure_url,
+            },
+            product: {
+              name: offer.product_name,
+              id: offer._id,
+              description: offer.proudct_description,
+              price: offer.product_price,
+              brand: offer.product_details.MARQUE,
+              size: offer.product_details.TAILLE,
+              condition: offer.product_details.ETAT,
+              color: offer.product_details.COULEUR,
+              location: offer.product_details.EMPLACEMENT,
+              main_picture: offer.product_image.secure_url,
+              pictures: offer.product_pictures,
+            },
+          };
+        });
+
+        setCatalogue(newCatalogue);
         setMustRetrieve(false);
       }
     } catch (error) {
@@ -54,11 +81,10 @@ function App() {
 
   return (
     <>
+      <Header />
+
       <Routes>
-        <Route path="/" element={<Header />} />
-      </Routes>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage catalogue={catalogue} />} />
         <Route path="/items/:id" element={<ItemPage />} />
       </Routes>
     </>
