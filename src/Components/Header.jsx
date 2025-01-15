@@ -41,9 +41,9 @@ const Header = () => {
       </div>
 
       <div className="header-buttons-zone header-desktop-only">
-        <button className="header-button-type-1">S’inscrire</button>
-        <button className="header-button-type-1">Se connecter</button>
-        <button className="header-button-type-2">Vends tes articles</button>
+        <button className="button-type-1">S’inscrire</button>
+        <button className="button-type-1">Se connecter</button>
+        <button className="button-type-2">Vends tes articles</button>
       </div>
     </header>
   );

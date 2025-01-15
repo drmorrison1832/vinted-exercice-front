@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
-
 import BannerSection from "../Components/BannerSection";
-import ItemsShowcase from "../Components/ItemsShowcase";
-
 import axios from "axios";
-
 import { useState, useEffect } from "react";
+import formatPrice from "../assets/tools/formatPrice";
 
 const Home = () => {
   const [data, setData] = useState();
@@ -66,7 +63,9 @@ const Home = () => {
                   />
                 </div>
                 <div className="card-info">
-                  <div className="card-price">{offer.product_price} €</div>
+                  <div className="card-price">
+                    {formatPrice(offer.product_price)}
+                  </div>
                   {offer.product_details.map((detail, index) => {
                     return (
                       Object.keys(detail)[0] === "MARQUE" && (
