@@ -4,7 +4,6 @@ const BannerSection = () => {
   return (
     <div className="banner-section">
       <img src={bannerImage} alt="banner image" />
-      <p>Lorem Ipsum</p>
     </div>
   );
 };
