@@ -56,6 +56,10 @@ button {
   }
 }
 
+.app {
+  position: relative;
+}
+
 .header {
   margin-top: 8px;
   display: flex;
@@ -129,21 +133,52 @@ button {
 }
 
 .header-icons-zone {
+  // border: 1px solid #000;
   display: flex;
+  // flex-direction: column;
   align-items: center;
   gap: 20px;
 
-  .icon-type-1 {
-    color: var(--font-color-3);
-  }
-
+  .icon-start-posting,
   .icon-user-login {
     font-size: 2.5em;
+    flex-shrink: 0;
   }
+}
 
-  .icon-start-posting {
-    font-size: 2.5em;
+.icon-type-1 {
+  color: var(--font-color-3);
+  &:hover {
+    color: var(--bg-color-3b);
   }
+  &:active {
+    color: var(--bg-color-3c);
+  }
+}
+
+.user-menu-modal-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-menu-modal {
+  background: var(--bg-color-1);
+  border-radius: 5px;
+  font-size: 2em;
+  height: 30dvh;
+  width: 50dvw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
 }
 
 .header-buttons-zone {
@@ -247,7 +282,10 @@ button {
 }
 
 .card-image {
-  height: 70dvw;
+  // height: 70dvw;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+
   overflow: hidden;
   display: flex;
   img {
@@ -398,7 +436,21 @@ button {
   }
 
   .offer-card {
-    flex-basis: 26%;
+    flex-basis: 26dvw;
+  }
+
+  .card-image {
+    // height: 70dvw;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+    display: flex;
+    img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 }
 

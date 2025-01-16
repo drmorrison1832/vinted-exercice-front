@@ -21,7 +21,7 @@ library.add(faUser, faPlus, faSquarePlus, faMagnifyingGlass);
 
 function App() {
   return (
-    <>
+    <div className="app">
       <Header />
 
       <Routes>
@@ -30,7 +30,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

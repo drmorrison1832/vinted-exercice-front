@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import Cookies from "js-cookie";
+
+import UserMenuModal from "./UserMenuModal";
 
 const Header = () => {
+  const [userModalVisible, setUserModalVisible] = useState(false);
+
+  const token = Cookies.get("token");
+
   return (
     <header className="header">
       <div className="website-logo">
@@ -30,18 +38,29 @@ const Header = () => {
       </div>
 
       <div className="header-icons-zone header-mobile-only">
-        <Link to="/signup">
-          <FontAwesomeIcon
-            className="icon-user-login icon-type-1"
-            icon="fa-solid fa-user"
-          />
-        </Link>
-        <Link to="/login">
-          <FontAwesomeIcon
-            className="icon-start-posting icon-type-1"
-            icon="fa-solid fa-plus"
-          />
-        </Link>
+        <FontAwesomeIcon
+          className="icon-user-login icon-type-1"
+          icon="fa-solid fa-user"
+          onClick={() => {
+            setUserModalVisible(!userModalVisible);
+          }}
+        ></FontAwesomeIcon>
+
+        <FontAwesomeIcon
+          className="icon-start-posting icon-type-1"
+          icon="fa-solid fa-plus"
+          onClick={() => {
+            token
+              ? window.alert(
+                  "normalement, ici tu seras dirigé vers la page des news posts"
+                )
+              : setUserModalVisible(true);
+          }}
+        />
+
+        {userModalVisible && (
+          <UserMenuModal setUserModalVisible={setUserModalVisible} />
+        )}
       </div>
 
       <div className="header-buttons-zone header-desktop-only">
