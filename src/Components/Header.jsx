@@ -30,14 +30,18 @@ const Header = () => {
       </div>
 
       <div className="header-icons-zone header-mobile-only">
-        <FontAwesomeIcon
-          className="icon-user-login icon-type-1"
-          icon="fa-solid fa-user"
-        />
-        <FontAwesomeIcon
-          className="icon-start-posting icon-type-1"
-          icon="fa-solid fa-plus"
-        />
+        <Link to="/signup">
+          <FontAwesomeIcon
+            className="icon-user-login icon-type-1"
+            icon="fa-solid fa-user"
+          />
+        </Link>
+        <Link to="/login">
+          <FontAwesomeIcon
+            className="icon-start-posting icon-type-1"
+            icon="fa-solid fa-plus"
+          />
+        </Link>
       </div>
 
       <div className="header-buttons-zone header-desktop-only">

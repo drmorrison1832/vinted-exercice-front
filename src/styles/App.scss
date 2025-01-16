@@ -1,5 +1,5 @@
 :root {
-  --main-font-family: "Tahoma";
+  --main-font-family: Arial, Verdana, Geneva, Tahoma, sans-serif;
   --bg-color-1: #ffffff;
   --bg-color-2: #f2f5f5;
   --bg-color-3: #09b1ba;
@@ -41,8 +41,10 @@
   left: 0;
 }
 
-.container {
-  width: 100%;
+.main-container,
+.offer-page-container {
+  margin: 0 auto;
+  width: 95%;
 }
 
 button {
@@ -253,11 +255,6 @@ button {
     object-fit: cover;
     object-position: center;
   }
-}
-
-.offer-page-container {
-  width: 80%;
-  margin: auto;
 }
 
 .offer-back-button {

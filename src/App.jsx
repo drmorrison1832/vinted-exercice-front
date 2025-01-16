@@ -6,6 +6,8 @@ import "./styles/App.scss";
 import Header from "./Components/Header";
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 
 // Icons
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -25,6 +27,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/offers/:id" element={<Offer />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );
