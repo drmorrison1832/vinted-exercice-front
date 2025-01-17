@@ -9,6 +9,9 @@
   --bg-color-5: #822774;
   --bg-color-6: #8f3d82;
   --bg-color-7: #36054f;
+  --bg-color-8a: #f64343;
+  --bg-color-8b: #d43939;
+  --bg-color-8c: #bd3333;
   --font-color-1: #000000;
   --font-color-2: #868a8a;
   --font-color-3: #0bcdbd;
@@ -17,13 +20,6 @@
   --font-color-6: #bbbbbb;
   --main-line-color: greenyellow;
   --other-line-color: orange;
-
-  --category-meals-gap: 10px;
-  --mobile-container-padding: 0.5dvw;
-  --meal-box-padding: 10px;
-
-  --basket-section-vertical-padding: 15px;
-  --basket-button-base-height: 60px;
 
   font-size: 12px;
   color: var(--font-color-1);
@@ -39,6 +35,10 @@
   position: fixed;
   top: 0;
   left: 0;
+}
+
+body {
+  position: relative;
 }
 
 .main-container,
@@ -132,12 +132,24 @@ button {
   gap: 10px;
 }
 
+.header-user-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.header-username {
+  color: var(--font-color-3);
+  font-weight: 500;
+  padding: 3px;
+}
+
 .header-icons-zone {
   // border: 1px solid #000;
   display: flex;
-  // flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
 
   .icon-start-posting,
   .icon-user-login {
@@ -229,6 +241,21 @@ button {
   }
 }
 
+.button-type-3 {
+  color: var(--font-color-5);
+  background: var(--bg-color-8a);
+  border: 1px solid var(--bg-color-8a);
+  border-radius: 5px;
+  &:hover {
+    background: var(--bg-color-8b);
+    border-color: var(--bg-color-8b);
+  }
+  &:active {
+    background: var(--bg-color-8c);
+    border-color: var(--bg-color-8c);
+  }
+}
+
 .banner-section {
   border: 0.5px solid white;
 }
@@ -303,7 +330,7 @@ button {
 }
 
 .offer-main-picture {
-  max-height: 60dvh;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   display: flex;
 
@@ -405,6 +432,9 @@ button {
 /* ### */
 
 @media (max-width: 767px) {
+  :root {
+    scrollbar-width: none;
+  }
   :root::before {
     content: "[phone]";
   }

@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-import BannerSection from "../Components/BannerSection";
+import BannerSection from "../components/BannerSection";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import formatPrice from "../assets/tools/formatPrice";
 
-const Home = () => {
+const Home = ({ setShowSearchFilters }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
+    setShowSearchFilters(true);
     async function getData() {
       try {
         let response = await axios.get(
@@ -24,7 +25,11 @@ const Home = () => {
       }
     }
     getData();
-  }, []);
+
+    return () => {
+      setShowSearchFilters(false);
+    };
+  }, [setShowSearchFilters]);
 
   if (errorLoading) {
     return <div className="isLoading-error">Error Loading content</div>;
