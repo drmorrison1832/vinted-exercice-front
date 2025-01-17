@@ -7,10 +7,8 @@ import "./styles/App.scss";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import UserMenuModal from "./modals/UserMenuModal";
-import UserLoginModal from "./modals/UserLoginModal";
+
+import UserConnectionModal from "./modals/UserConnectionModal";
 
 // Icons
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -24,9 +22,8 @@ library.add(faUser, faPlus, faSquarePlus, faMagnifyingGlass);
 
 function App() {
   const [showSearchFilters, setShowSearchFilters] = useState();
-  const [account, setAccount] = useState();
+
   const [userModalVisible, setUserModalVisible] = useState(false);
-  const [userLoginModalVisible, setUserLoginModalVisible] = useState(false);
 
   return (
     <div className="app">
@@ -44,19 +41,12 @@ function App() {
           path="/offers/:id"
           element={<Offer setShowSearchFilters={setShowSearchFilters} />}
         />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login account={account} />} />
+        {/* <Route path="/signup" element={<Signup />} /> */}
+        {/* <Route path="/login" element={<Login />} /> */}
       </Routes>
 
       {userModalVisible && (
-        <UserMenuModal
-          setUserModalVisible={setUserModalVisible}
-          setUserLoginModalVisible={setUserLoginModalVisible}
-        />
-      )}
-
-      {userLoginModalVisible && (
-        <UserLoginModal setUserLoginModalVisible={setUserLoginModalVisible} />
+        <UserConnectionModal setUserModalVisible={setUserModalVisible} />
       )}
     </div>
   );

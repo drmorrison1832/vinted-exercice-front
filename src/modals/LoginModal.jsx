@@ -7,9 +7,6 @@ const Login = () => {
   const [errorLoading, setErrorLoading] = useState(false);
   const navigate = Navigate();
 
-  // ===> À FAIRE: token && redirect vers Home
-  // ===> FINIR FORMULAIRE
-
   async function handleClick(event) {
     event.preventDefault();
     try {
@@ -39,8 +36,10 @@ const Login = () => {
     <div className="main-container">
       <div>Login Window</div>
       <form>
+        <input type="text" />
+        <input type="password" />
         <button className="button-type-2" onClick={handleClick}>
-          Se connecter
+          Se connecter en tant con Fernando
         </button>
       </form>
 

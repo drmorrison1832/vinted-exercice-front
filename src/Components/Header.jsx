@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import Cookies from "js-cookie";
 
 const Header = ({ showSearchFilters, setUserModalVisible }) => {
@@ -9,8 +8,10 @@ const Header = ({ showSearchFilters, setUserModalVisible }) => {
 
   return (
     <header className="header">
-      <div className="website-logo">
-        <Link to="/">Vinted </Link>
+      <div className="haeder-logo-block">
+        <p>
+          <Link to="/">Vinted </Link>
+        </p>
       </div>
 
       <div className="search-zone">
@@ -57,7 +58,7 @@ const Header = ({ showSearchFilters, setUserModalVisible }) => {
             onClick={() => {
               token
                 ? window.alert(
-                    "normalement, ici tu seras dirigé vers la page des news posts"
+                    "Token trouvé. Normalement, ici tu seras dirigé vers la page des news posts"
                   )
                 : setUserModalVisible(true);
             }}

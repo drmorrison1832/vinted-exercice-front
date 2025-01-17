@@ -61,7 +61,7 @@ button {
 }
 
 .header {
-  margin-top: 8px;
+  padding-top: 8px;
   display: flex;
   justify-content: space-between;
   gap: 3dvw;
@@ -69,14 +69,19 @@ button {
   margin-bottom: 30px;
 }
 
-.website-logo {
-  font-size: 3em;
-  font-weight: 700;
-  color: var(--font-color-3);
-  flex-grow: 0;
+.haeder-logo-block {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
+  & p {
+    font-size: 3em;
+    line-height: 1em;
+    font-weight: 700;
+    color: var(--font-color-3);
+    flex-grow: 0;
+    padding: 0;
+    border: 1px solid #000;
+  }
 }
 
 .search-zone {
@@ -168,7 +173,7 @@ button {
   }
 }
 
-.user-menu-modal-root {
+.modal-root {
   position: absolute;
   top: 0;
   left: 0;
@@ -180,21 +185,49 @@ button {
   align-items: center;
 }
 
-.user-menu-modal {
+.connection-modal-window {
   background: var(--bg-color-1);
   border-radius: 5px;
-  font-size: 2em;
-  height: 30dvh;
-  width: 50dvw;
+  font-size: 1.5em;
+  min-height: 40dvh;
+  width: 80dvw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1em;
+  gap: 2em;
+  border-radius: 10px;
+  padding: 1em;
+  & form {
+    font-size: 0.9em;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    & .connection-form-label,
+    .signup-form-label {
+      align-self: center;
+      font-weight: 700;
+    }
+    & input {
+      border-width: 0 0 1px 0;
+      border-color: #0bcdbd;
+    }
+    & p {
+      color: #068d94;
+      align-self: center;
+    }
+  }
+}
+
+.modal-show {
+  display: flex;
+}
+.modal-hide {
+  display: none;
 }
 
 .header-buttons-zone {
-  border: 1px solid #000;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -289,7 +322,6 @@ button {
 }
 
 .offer-card {
-  // border: 1px solid #000;
   flex-basis: 34%;
   flex-grow: 1;
   flex-shrink: 0;
@@ -323,7 +355,6 @@ button {
 }
 
 .offer-back-button {
-  // border: 1px solid #000;
   button {
     margin-bottom: 10px;
   }
@@ -494,7 +525,6 @@ button {
   }
 
   .sort-by-price-switch {
-    border: 1px solid #000;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 15px;
@@ -505,7 +535,6 @@ button {
     flex-direction: row;
     justify-content: space-between;
     flex-grow: 1;
-    border: 1px solid #000;
   }
 
   .offer-card {

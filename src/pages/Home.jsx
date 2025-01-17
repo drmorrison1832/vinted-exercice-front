@@ -20,6 +20,7 @@ const Home = ({ setShowSearchFilters }) => {
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
+        console.log(error);
         setErrorLoading(true);
         setIsLoading(false);
       }
@@ -45,7 +46,7 @@ const Home = ({ setShowSearchFilters }) => {
 
       <div className="main-container">
         <div className="items-showcase">
-          {data.offers.map((offer, index) => {
+          {data.offers.map((offer) => {
             return (
               <article className="offer-card" key={offer._id}>
                 <Link to={`/offers/${offer._id}`}>
