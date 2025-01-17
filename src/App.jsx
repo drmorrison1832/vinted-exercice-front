@@ -26,29 +26,31 @@ function App() {
   const [userModalVisible, setUserModalVisible] = useState(false);
 
   return (
-    <div className="app">
-      <Header
-        showSearchFilters={showSearchFilters}
-        setUserModalVisible={setUserModalVisible}
-      />
-
-      <Routes>
-        <Route
-          path="/"
-          element={<Home setShowSearchFilters={setShowSearchFilters} />}
+    <Router>
+      <div className="app">
+        <Header
+          showSearchFilters={showSearchFilters}
+          setUserModalVisible={setUserModalVisible}
         />
-        <Route
-          path="/offers/:id"
-          element={<Offer setShowSearchFilters={setShowSearchFilters} />}
-        />
-        {/* <Route path="/signup" element={<Signup />} /> */}
-        {/* <Route path="/login" element={<Login />} /> */}
-      </Routes>
 
-      {userModalVisible && (
-        <UserConnectionModal setUserModalVisible={setUserModalVisible} />
-      )}
-    </div>
+        <Routes>
+          <Route
+            path="/"
+            element={<Home setShowSearchFilters={setShowSearchFilters} />}
+          />
+          <Route
+            path="/offers/:id"
+            element={<Offer setShowSearchFilters={setShowSearchFilters} />}
+          />
+          {/* <Route path="/signup" element={<Signup />} /> */}
+          {/* <Route path="/login" element={<Login />} /> */}
+        </Routes>
+
+        {userModalVisible && (
+          <UserConnectionModal setUserModalVisible={setUserModalVisible} />
+        )}
+      </div>
+    </Router>
   );
 }
 
