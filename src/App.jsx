@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import "./styles/App.scss";
 
-import Header from "./components/Header";
+import Header from "./comp/Header";
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 
@@ -32,7 +32,6 @@ function App() {
           showSearchFilters={showSearchFilters}
           setUserModalVisible={setUserModalVisible}
         />
-
         <Routes>
           <Route
             path="/"

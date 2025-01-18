@@ -7,6 +7,7 @@ import axios from "axios";
 const UserConnectionModal = ({ setUserModalVisible }) => {
   const token = Cookie.get("token");
 
+  // Possible values: LoginOrSignup, Login, SignupLogout, ErrorUnknown
   const [connectionModalToRender, setConnectionModalToRender] = useState();
 
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const UserConnectionModal = ({ setUserModalVisible }) => {
     } catch (error) {
       console.log("error is:", error);
 
-      setConnectionModalToRender("Error");
+      setConnectionModalToRender("ErrorUnknown");
     }
   }
 
@@ -101,7 +102,16 @@ const UserConnectionModal = ({ setUserModalVisible }) => {
             <button className="button-type-2" onClick={handleConnection}>
               Se connecter en tant con Fernando
             </button>
-            <p>Pas encore de compte&nbsp;? Inscris-toi&nbsp;!</p>
+            <p>
+              Pas encore de compte&nbsp;?
+              <span
+                onClick={() => {
+                  setConnectionModalToRender("Signup");
+                }}
+              >
+                Inscris-toi&nbsp;!
+              </span>
+            </p>
           </form>
         )}
         {connectionModalToRender === "Signup" && (
@@ -123,7 +133,14 @@ const UserConnectionModal = ({ setUserModalVisible }) => {
             >
               S'inscrire
             </button>
-            <p>Pas encore de compte&nbsp;? Inscris-toi&nbsp;!</p>
+            <p
+              onClick={(event) => {
+                event.preventDefault();
+                setConnectionModalToRender("Login");
+              }}
+            >
+              Tu as déjà un compte&nbsp;? Connecte-toi&nbsp;!
+            </p>
           </form>
         )}
         {connectionModalToRender === "Logout" && (
@@ -131,7 +148,7 @@ const UserConnectionModal = ({ setUserModalVisible }) => {
             Se déconnecter
           </button>
         )}
-        {connectionModalToRender === "Error" && (
+        {connectionModalToRender === "ErrorUnknown" && (
           <div className="server-error">
             Erreur de connexion. Essaie plus tard.
           </div>
@@ -142,29 +159,3 @@ const UserConnectionModal = ({ setUserModalVisible }) => {
 };
 
 export default UserConnectionModal;
-
-{
-  /* 
-
-
-    <div className="login-or-signup-modal"
-    onClick={(event) => {
-      event.stopPropagation();
-    }}
-  >
-        {!token && (
-          <>
-            
-          </>
-        )}
-
-        {token && (
-          <button className="button-type-3" onClick={handleDisconnect}>
-            Se déconnecter
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}; */
-}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import BannerSection from "../components/BannerSection";
+import BannerSection from "../comp/BannerSection";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import formatPrice from "../assets/tools/formatPrice";
