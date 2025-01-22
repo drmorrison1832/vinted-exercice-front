@@ -56,6 +56,14 @@ button {
   }
 }
 
+.error {
+  color: red;
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
 .app {
   position: relative;
 }
@@ -203,19 +211,19 @@ button {
     width: 80%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 2em;
     & .connection-form-label,
     .signup-form-label {
-      align-self: center;
       font-weight: 700;
     }
     & input {
+      align-self: stretch;
       border-width: 0 0 1px 0;
       border-color: #0bcdbd;
     }
-    & p {
+    & .form-text {
       color: #068d94;
-      align-self: center;
     }
   }
 }

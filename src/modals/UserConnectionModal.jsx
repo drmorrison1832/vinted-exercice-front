@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
 
+import Login from "./Login";
+import Signup from "./Signup";
+
 import axios from "axios";
 
-const UserConnectionModal = ({ setUserModalVisible }) => {
+const UserConnectionModal = ({ setUserModalVisible, setMustRefresh }) => {
   const token = Cookie.get("token");
 
   // Possible values: LoginOrSignup, Login, SignupLogout, ErrorUnknown
@@ -44,8 +47,6 @@ const UserConnectionModal = ({ setUserModalVisible }) => {
       setUserModalVisible(false);
       navigate("/");
     } catch (error) {
-      console.log("error is:", error);
-
       setConnectionModalToRender("ErrorUnknown");
     }
   }
@@ -71,6 +72,13 @@ const UserConnectionModal = ({ setUserModalVisible }) => {
           event.stopPropagation();
         }}
       >
+        <div
+          onClick={() => {
+            setUserModalVisible(false);
+          }}
+        >
+          X
+        </div>
         {connectionModalToRender === "LoginOrSignup" && (
           <>
             <div>Tu as déjà un compte ?</div>
@@ -95,53 +103,18 @@ const UserConnectionModal = ({ setUserModalVisible }) => {
           </>
         )}
         {connectionModalToRender === "Login" && (
-          <form>
-            <h2 className="connection-form-label">Se connecter</h2>
-            <input type="text" placeholder="E-mail ou nom d'utilisateur" />
-            <input type="password" placeholder="Mot de passe" />
-            <button className="button-type-2" onClick={handleConnection}>
-              Se connecter en tant con Fernando
-            </button>
-            <p>
-              Pas encore de compte&nbsp;?
-              <span
-                onClick={() => {
-                  setConnectionModalToRender("Signup");
-                }}
-              >
-                Inscris-toi&nbsp;!
-              </span>
-            </p>
-          </form>
+          <Login
+            setConnectionModalToRender={setConnectionModalToRender}
+            setUserModalVisible={setUserModalVisible}
+            setMustRefresh={setMustRefresh}
+          />
         )}
         {connectionModalToRender === "Signup" && (
-          <form>
-            <h2 className="signup-form-label">S’inscrire</h2>
-            <input type="text" placeholder="Nom d'utilisateur" />
-            <input type="email" placeholder="E-mail" />
-            <input type="password" placeholder="Mot de passe" />
-
-            <label htmlFor="newsletter">
-              <input type="checkbox" id="newsletter" />
-              S'inscrire à notre newsletter
-            </label>
-            <button
-              className="button-type-2"
-              onClick={(event) => {
-                event.preventDefault();
-              }}
-            >
-              S'inscrire
-            </button>
-            <p
-              onClick={(event) => {
-                event.preventDefault();
-                setConnectionModalToRender("Login");
-              }}
-            >
-              Tu as déjà un compte&nbsp;? Connecte-toi&nbsp;!
-            </p>
-          </form>
+          <Signup
+            setConnectionModalToRender={setConnectionModalToRender}
+            setUserModalVisible={setUserModalVisible}
+            setMustRefresh={setMustRefresh}
+          />
         )}
         {connectionModalToRender === "Logout" && (
           <button className="button-type-3" onClick={handleDisconnect}>

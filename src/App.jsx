@@ -1,6 +1,6 @@
 // <Router> is in main.jsx
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./styles/App.scss";
 
@@ -20,10 +20,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 library.add(faUser, faPlus, faSquarePlus, faMagnifyingGlass);
 
+console.log("rendring App");
+
 function App() {
   const [showSearchFilters, setShowSearchFilters] = useState();
-
   const [userModalVisible, setUserModalVisible] = useState(false);
+  const [mustRefresh, setMustRefresh] = useState(false);
+
+  useEffect(() => {
+    return setMustRefresh(false);
+  }, [setMustRefresh]);
 
   return (
     <Router>
@@ -46,7 +52,10 @@ function App() {
         </Routes>
 
         {userModalVisible && (
-          <UserConnectionModal setUserModalVisible={setUserModalVisible} />
+          <UserConnectionModal
+            setUserModalVisible={setUserModalVisible}
+            setMustRefresh={setMustRefresh}
+          />
         )}
       </div>
     </Router>
