@@ -32,11 +32,15 @@ const Offer = () => {
   }, [id]);
 
   if (errorLoading) {
-    return <div className="isLoading-error">Error isLoading content</div>;
+    return (
+      <div className="isLoading-error">
+        Oups ! Quelque chose n'a pas fonctionné...
+      </div>
+    );
   }
 
   if (isLoading) {
-    return <div className="isLoading">Loading content...</div>;
+    return <div className="isLoading">Chargement...</div>;
   }
 
   return (

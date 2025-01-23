@@ -7,6 +7,7 @@ import "./styles/App.scss";
 import Header from "./comp/Header";
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
+import Publish from "./pages/Publish";
 
 import UserConnectionModal from "./modals/UserConnectionModal";
 
@@ -47,8 +48,16 @@ function App() {
             path="/offers/:id"
             element={<Offer setShowSearchFilters={setShowSearchFilters} />}
           />
-          {/* <Route path="/signup" element={<Signup />} /> */}
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route
+            path="/publish"
+            element={
+              <Publish
+                setShowSearchFilters={setShowSearchFilters}
+                userModalVisible={userModalVisible}
+                setUserModalVisible={setUserModalVisible}
+              />
+            }
+          />
         </Routes>
 
         {userModalVisible && (

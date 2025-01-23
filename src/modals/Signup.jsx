@@ -19,7 +19,7 @@ const Signup = ({
   async function handleSubmit() {
     try {
       if (username === "" || email === "" || password === "") {
-        setShowError("Merci de renseigner tous les champs");
+        setShowError("Merci de remplir tous les champs");
         return;
       } else {
         setShowError("");
@@ -38,13 +38,23 @@ const Signup = ({
         newUser
       );
 
+      console.log(response);
+
       Cookie.set("token", response.data.token);
       Cookie.set("username", response.data.account.username);
       setUserModalVisible(false);
       navigate("/");
       setMustRefresh(true);
     } catch (error) {
-      setShowError(error.response.data.message);
+      console.log(error);
+      if (error.status === 409) {
+        setShowError(
+          "Un utilisateur est déjà enregistré avec cette adresse email"
+        );
+      } else
+        setShowError(
+          "Au temps pour nous ! Essaie à nouveau dans quelques minutes"
+        );
     }
   }
 

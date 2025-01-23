@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
 
 const Header = ({ showSearchFilters, setUserModalVisible }) => {
   const token = Cookies.get("token");
   const username = Cookies.get("username");
+
+  const navigate = useNavigate();
 
   return (
     <header className="header">
@@ -52,17 +54,18 @@ const Header = ({ showSearchFilters, setUserModalVisible }) => {
             }}
           ></FontAwesomeIcon>
 
-          <FontAwesomeIcon
-            className="icon-start-posting icon-type-1"
-            icon="fa-solid fa-plus"
-            onClick={() => {
-              token
-                ? window.alert(
-                    "Token trouvé. Normalement, ici tu seras dirigé vers la page des news posts"
-                  )
-                : setUserModalVisible(true);
-            }}
-          />
+          <Link to="/publish">
+            <FontAwesomeIcon
+              className="icon-start-posting icon-type-1"
+              icon="fa-solid fa-plus"
+              onClick={() => {
+                if (token) {
+                  setShowSearchFilters(false);
+                  navigate("/publish");
+                } else setUserModalVisible(true);
+              }}
+            />
+          </Link>
         </div>
       </div>
       <div className="header-buttons-zone header-desktop-only">

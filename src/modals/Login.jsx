@@ -5,7 +5,7 @@ import Cookie from "js-cookie";
 
 const Login = ({
   setConnectionModalToRender,
-  setEmailModalVisible,
+  setUserModalVisible,
   setMustRefresh,
 }) => {
   const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ const Login = ({
   async function handleConnection() {
     try {
       if (email === "" || password === "") {
-        setShowError("Merci de renseigner tous les champs");
+        setShowError("Merci de remplir tous les champs");
         return;
       } else {
         setShowError("");
@@ -33,12 +33,17 @@ const Login = ({
 
       Cookie.set("token", response.data.token);
       Cookie.set("username", response.data.account.username);
-      setEmailModalVisible(false);
-      navigate("/");
+      setUserModalVisible(false);
+      // navigate("/");
       setMustRefresh(true);
     } catch (error) {
-      // setShowError(error.response.data.message);
-      setShowError("Email ou mot de passe incorrect");
+      console.log(error);
+      if (error.status === 400 || error.status === 401) {
+        setShowError("Email ou mot de passe incorrect");
+      } else
+        setShowError(
+          "Au temps pour nous ! Essaie à nouveau dans quelques minutes"
+        );
     }
   }
 
