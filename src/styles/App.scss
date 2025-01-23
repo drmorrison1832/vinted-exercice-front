@@ -460,16 +460,49 @@ button {
 .publish-form {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 2em;
+  padding: 1em;
+  background-color: var(--bg-color-2);
+
+  .publish-form-mobile-only {
+  }
+  .publish-form-desktop-only {
+    display: none;
+  }
+
+  ::placeholder {
+    color: var(--font-color-2);
+  }
+
+  .publish-form-minimalist-input {
+    padding: 0.5em;
+    border-width: 0 0 1px 0;
+    border-color: var(--bg-color-4);
+  }
+
   .form-inner-section {
     display: flex;
+    gap: 2em;
     flex-direction: column;
+    background-color: var(--bg-color-1);
+    padding: 1em;
   }
-}
 
-textarea {
-  resize: none;
-  min-width: 100%;
+  textarea {
+    // border: none;
+    resize: none;
+    min-width: 100%;
+    min-height: 7em;
+    // scrollbar-width: none;
+  }
+  .price-input {
+    margin-left: 2em;
+    text-align: right;
+  }
+  .publish-button {
+    align-self: center;
+  }
 }
 
 /* ### */

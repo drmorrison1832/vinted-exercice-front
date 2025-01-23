@@ -2,7 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
 
-const Header = ({ showSearchFilters, setUserModalVisible }) => {
+const Header = ({
+  showSearchFilters,
+  setShowSearchFilters,
+  setUserModalVisible,
+}) => {
   const token = Cookies.get("token");
   const username = Cookies.get("username");
 
@@ -54,18 +58,16 @@ const Header = ({ showSearchFilters, setUserModalVisible }) => {
             }}
           ></FontAwesomeIcon>
 
-          <Link to="/publish">
-            <FontAwesomeIcon
-              className="icon-start-posting icon-type-1"
-              icon="fa-solid fa-plus"
-              onClick={() => {
-                if (token) {
-                  setShowSearchFilters(false);
-                  navigate("/publish");
-                } else setUserModalVisible(true);
-              }}
-            />
-          </Link>
+          <FontAwesomeIcon
+            className="icon-start-posting icon-type-1"
+            icon="fa-solid fa-plus"
+            onClick={() => {
+              if (token) {
+                setShowSearchFilters(false);
+                navigate("/publish");
+              } else setUserModalVisible(true);
+            }}
+          />
         </div>
       </div>
       <div className="header-buttons-zone header-desktop-only">

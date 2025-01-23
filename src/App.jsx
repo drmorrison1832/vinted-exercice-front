@@ -11,6 +11,8 @@ import Publish from "./pages/Publish";
 
 import UserConnectionModal from "./modals/UserConnectionModal";
 
+import Cookies from "js-cookie";
+
 // Icons
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -28,6 +30,8 @@ function App() {
   const [userModalVisible, setUserModalVisible] = useState(false);
   const [mustRefresh, setMustRefresh] = useState(false);
 
+  const token = Cookies.get("token");
+
   useEffect(() => {
     return setMustRefresh(false);
   }, [setMustRefresh]);
@@ -37,6 +41,7 @@ function App() {
       <div className="app">
         <Header
           showSearchFilters={showSearchFilters}
+          setShowSearchFilters={setShowSearchFilters}
           setUserModalVisible={setUserModalVisible}
         />
         <Routes>
@@ -51,11 +56,15 @@ function App() {
           <Route
             path="/publish"
             element={
-              <Publish
-                setShowSearchFilters={setShowSearchFilters}
-                userModalVisible={userModalVisible}
-                setUserModalVisible={setUserModalVisible}
-              />
+              token ? (
+                <Publish
+                  setShowSearchFilters={setShowSearchFilters}
+                  userModalVisible={userModalVisible}
+                  setUserModalVisible={setUserModalVisible}
+                />
+              ) : (
+                <Home setShowSearchFilters={setShowSearchFilters} />
+              )
             }
           />
         </Routes>

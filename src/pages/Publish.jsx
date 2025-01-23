@@ -17,24 +17,29 @@ const Publish = ({
   const [errorLoading, setErrorLoading] = useState(false);
   const [data, setData] = useState();
 
-  const [titre, setTitre] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [marque, setMarque] = useState("");
-  const [taille, setTaille] = useState("");
-  const [couleur, setCouleur] = useState("");
-  const [etat, setEtat] = useState("");
-  const [lieu, setLieu] = useState("");
-  const [prix, setPrix] = useState("");
+  const [brand, setBrand] = useState("");
+  const [size, setSize] = useState("");
+  const [color, setColor] = useState("");
+  const [condition, setCondition] = useState("");
+  const [city, setCity] = useState("");
+  const [price, setPrice] = useState("");
+  const [exchange, setExchange] = useState(false);
 
   const navigate = useNavigate();
 
   const token = Cookies.get("token");
-  setShowSearchFilters(false);
+
+  useEffect(() => {
+    setShowSearchFilters(false);
+  }, [setShowSearchFilters]);
 
   useEffect(() => {
     function isAuthentified() {
       if (!token) {
-        setUserModalVisible(true);
+        navigate("/");
+        // setUserModalVisible(true);
       }
     }
     isAuthentified();
@@ -81,21 +86,37 @@ const Publish = ({
   return (
     <div className="publish-page-container">
       <form className="publish-form">
+        <h2>Vends ton article</h2>
         <div className="form-inner-section">
-          <input type="file" />
-        </div>
-        <div className="form-inner-section">
-          <label htmlFor="titre">Titre</label>
+          <label htmlFor="picture">Photo</label>
           <input
-            type="text"
-            id="titre"
-            value={titre}
+            type="file"
+            id="picture"
             onChange={(event) => {
-              setTitre(event.target.value);
+              console.log(event.target.files);
             }}
           />
-          <label htmlFor="description">Décris ton article</label>
+        </div>
+        <div className="form-inner-section">
+          <label htmlFor="title" className="publish-form-desktop-only">
+            Titre
+          </label>
+          <input
+            className="publish-form-minimalist-input"
+            placeholder="Titre"
+            type="text"
+            id="title"
+            value={title}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
+          />
+          <label htmlFor="description" className="publish-form-desktop-only">
+            Décris ton article
+          </label>
           <textarea
+            className="publish-form-minimalist-input"
+            placeholder="Description"
             id="description"
             value={description}
             onChange={(event) => {
@@ -104,78 +125,120 @@ const Publish = ({
           ></textarea>
         </div>
         <div className="form-inner-section">
-          <label htmlFor="marque">Marque</label>
+          <label htmlFor="brand" className="publish-form-desktop-only">
+            Marque
+          </label>
           <input
+            className="publish-form-minimalist-input"
+            placeholder="Marque"
             type="text"
-            id="marque"
+            id="brand"
             onChange={(event) => {
-              setMarque(event.target.value);
+              setBrand(event.target.value);
             }}
           />
-          <label htmlFor="taille">Taille</label>
+          <label htmlFor="size" className="publish-form-desktop-only">
+            Taille
+          </label>
           <input
+            className="publish-form-minimalist-input"
+            placeholder="Taille"
             type="text"
-            id="taille"
+            id="size"
             onChange={(event) => {
-              setTaille(event.target.value);
+              setSize(event.target.value);
             }}
           />
-          <label htmlFor="couleur">Couleur</label>
+          <label htmlFor="color" className="publish-form-desktop-only">
+            Couleur
+          </label>
           <input
+            className="publish-form-minimalist-input"
+            placeholder="Couleur"
             type="text"
-            id="couleur"
+            id="color"
             onChange={(event) => {
-              setCouleur(event.target.value);
+              setColor(event.target.value);
             }}
           />
-          <label htmlFor="etat">État</label>
+          <label htmlFor="condition" className="publish-form-desktop-only">
+            État
+          </label>
           <input
+            className="publish-form-minimalist-input"
+            placeholder="État"
             type="text"
-            id="etat"
+            id="condition"
             onChange={(event) => {
-              setEtat(event.target.value);
+              setCondition(event.target.value);
             }}
           />
-          <label htmlFor="lieu">Lieu</label>
+          <label htmlFor="city" className="publish-form-desktop-only">
+            Lieu
+          </label>
           <input
+            className="publish-form-minimalist-input"
+            placeholder="Lieu : p. ex. Paris"
             type="text"
-            id="lieu"
+            id="city"
             onChange={(event) => {
-              setLieu(event.target.value);
+              setCity(event.target.value);
             }}
           />
         </div>
         <div className="form-inner-section">
-          <label
-            htmlFor="prix"
-            onChange={(event) => {
-              setPrix(event.target.value);
-            }}
-          >
+          <label htmlFor="price">
             Prix
+            <input
+              className="publish-form-minimalist-input price-input"
+              placeholder="0"
+              type="number"
+              min="0"
+              id="price"
+              value={price}
+              onChange={(event) => {
+                setPrice(event.target.value);
+              }}
+            />{" "}
+            €
           </label>
-          <input type="number" id="prix" />
+
           <span>
-            <input type="checkbox" id="exchange" />
+            <input
+              type="checkbox"
+              id="exchange"
+              value={exchange}
+              onChange={() => {
+                setExchange(!exchange);
+              }}
+            />
             <label htmlFor="exchange">
               Je suis intéressé•e pour les échanges
             </label>
           </span>
         </div>
-        <input
-          type="submit"
-          onClick={(event) => {
-            event.preventDefault();
-            console.log("titre", titre);
-            console.log(description);
-            console.log(marque);
-            console.log(taille);
-            console.log(couleur);
-            console.log(etat);
-            console.log(lieu);
-            console.log(prix);
-          }}
-        />
+        <div className="publish-button">
+          <button
+            className="button-type-2"
+            type="submit"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log({
+                title,
+                description,
+                brand,
+                size,
+                color,
+                condition,
+                city,
+                price,
+                exchange,
+              });
+            }}
+          >
+            Ajouter
+          </button>
+        </div>
       </form>
     </div>
   );
