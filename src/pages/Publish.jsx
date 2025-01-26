@@ -6,10 +6,8 @@ import Cookies from "js-cookie";
 
 import axios from "axios";
 
-// import formatPrice from "../assets/tools/formatPrice";
-
 const Publish = ({
-  setShowSearchFilters,
+  setShowQueryFilters,
   userModalVisible,
   setUserModalVisible,
 }) => {
@@ -17,172 +15,188 @@ const Publish = ({
   const [errorLoading, setErrorLoading] = useState(false);
   const [data, setData] = useState();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [brand, setBrand] = useState("");
-  const [size, setSize] = useState("");
-  const [color, setColor] = useState("");
-  const [condition, setCondition] = useState("");
-  const [city, setCity] = useState("");
-  const [price, setPrice] = useState("");
-  const [exchange, setExchange] = useState(false);
+  const [params, setParams] = useState({
+    title: "",
+    description: "",
+    price: "",
+    condition: "",
+    city: "",
+    brand: "",
+    size: "",
+    color: "",
+  });
+
+  // const [picture, setPicture] = useState(new File([], "foo.txt"));
+  const [picture, setPicture] = useState();
 
   const navigate = useNavigate();
 
   const token = Cookies.get("token");
 
-  useEffect(() => {
-    setShowSearchFilters(false);
-  }, [setShowSearchFilters]);
+  if (!token) {
+    navigate("/");
+  }
 
   useEffect(() => {
-    function isAuthentified() {
-      if (!token) {
-        navigate("/");
-        // setUserModalVisible(true);
-      }
-    }
-    isAuthentified();
-  }, [token, navigate, setUserModalVisible, userModalVisible]);
+    setShowQueryFilters(false);
+  }, [setShowQueryFilters]);
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        const params = {};
-        const response = { data: "test" };
-        // const response = await axios.post(
-        //   "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
-        //   params,
-        //   { headers: { authorization: `Bearer ${token}` } }
-        // );
-        // console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        // console.log(error);
-        if (error.status === 401) {
-          setUserModalVisible(true);
-          return;
+  function handleChange(param, value) {
+    const newParams = { ...params };
+    newParams[param] = value;
+    setParams(newParams);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    if (params.title === "" || params.price === "" || picture === "") {
+      let emptyKeys = [];
+      Object.keys(params).forEach((key) => {
+        if (params[key] === "") {
+          emptyKeys.push(key);
         }
-        setErrorLoading(true);
-        setIsLoading(false);
-      }
+      });
+      window.alert("Tu n'as pas rempli les champs suivants :\n" + emptyKeys);
+      return;
     }
-    getData();
-  }, []);
 
-  // if (errorLoading) {
-  //   return (
-  //     <div className="isLoading-error">
-  //       Oups ! Quelque chose n'a pas fonctionné...
-  //     </div>
-  //   );
-  // }
+    const formData = new FormData();
 
-  // if (isLoading) {
-  //   return <div className="isLoading">Chargement...</div>;
-  // }
+    formData.append("picture", picture);
+
+    Object.keys(params).forEach((key) => {
+      formData.append(key, params[key]);
+    });
+
+    try {
+      const response = await axios.post(
+        "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
+        formData,
+        { headers: { authorization: `Bearer ${token}` } }
+      );
+      setData(response.data);
+      setIsLoading(false);
+      navigate(`/offers/${response.data._id}`, { state: { newOffer: true } });
+    } catch (error) {
+      if (error.status === 401) {
+        setUserModalVisible(true);
+        return;
+      }
+      setErrorLoading(true);
+      setIsLoading(false);
+    }
+  }
 
   return (
     <div className="publish-page-container">
       <form className="publish-form">
         <h2>Vends ton article</h2>
         <div className="form-inner-section">
-          <label htmlFor="picture">Photo</label>
+          {picture && (
+            <div
+              onClick={() => {
+                setPicture(null);
+              }}
+            >
+              X
+            </div>
+          )}
+          <label htmlFor="picture" id="picture-label">
+            {!picture ? (
+              <div>Ajouter une photo...</div>
+            ) : (
+              <div>
+                <img src={URL.createObjectURL(picture)} alt="" />
+              </div>
+            )}
+          </label>
           <input
             type="file"
             id="picture"
+            accept="image/*"
             onChange={(event) => {
-              console.log(event.target.files);
+              // console.log(event.target.files);
+              setPicture(event.target.files[0]);
             }}
           />
         </div>
         <div className="form-inner-section">
-          <label htmlFor="title" className="publish-form-desktop-only">
-            Titre
-          </label>
           <input
             className="publish-form-minimalist-input"
             placeholder="Titre"
             type="text"
             id="title"
-            value={title}
+            value={params.title}
             onChange={(event) => {
-              setTitle(event.target.value);
+              // setTitle(event.target.value);
+              handleChange("title", event.target.value);
             }}
           />
-          <label htmlFor="description" className="publish-form-desktop-only">
-            Décris ton article
-          </label>
+
           <textarea
             className="publish-form-minimalist-input"
             placeholder="Description"
             id="description"
-            value={description}
+            value={params.description}
             onChange={(event) => {
-              setDescription(event.target.value);
+              // setDescription(event.target.value);
+              handleChange("description", event.target.value);
             }}
           ></textarea>
         </div>
         <div className="form-inner-section">
-          <label htmlFor="brand" className="publish-form-desktop-only">
-            Marque
-          </label>
           <input
             className="publish-form-minimalist-input"
             placeholder="Marque"
             type="text"
             id="brand"
             onChange={(event) => {
-              setBrand(event.target.value);
+              // setBrand(event.target.value);
+              handleChange("brand", event.target.value);
             }}
           />
-          <label htmlFor="size" className="publish-form-desktop-only">
-            Taille
-          </label>
+
           <input
             className="publish-form-minimalist-input"
             placeholder="Taille"
             type="text"
             id="size"
             onChange={(event) => {
-              setSize(event.target.value);
+              // setSize(event.target.value);
+              handleChange("size", event.target.value);
             }}
           />
-          <label htmlFor="color" className="publish-form-desktop-only">
-            Couleur
-          </label>
+
           <input
             className="publish-form-minimalist-input"
             placeholder="Couleur"
             type="text"
             id="color"
             onChange={(event) => {
-              setColor(event.target.value);
+              // setColor(event.target.value);
+              handleChange("color", event.target.value);
             }}
           />
-          <label htmlFor="condition" className="publish-form-desktop-only">
-            État
-          </label>
+
           <input
             className="publish-form-minimalist-input"
             placeholder="État"
             type="text"
             id="condition"
             onChange={(event) => {
-              setCondition(event.target.value);
+              // setCondition(event.target.value);
+              handleChange("condition", event.target.value);
             }}
           />
-          <label htmlFor="city" className="publish-form-desktop-only">
-            Lieu
-          </label>
+
           <input
             className="publish-form-minimalist-input"
             placeholder="Lieu : p. ex. Paris"
             type="text"
             id="city"
             onChange={(event) => {
-              setCity(event.target.value);
+              // setCity(event.target.value);
+              handleChange("city", event.target.value);
             }}
           />
         </div>
@@ -195,9 +209,10 @@ const Publish = ({
               type="number"
               min="0"
               id="price"
-              value={price}
+              value={params.price}
               onChange={(event) => {
-                setPrice(event.target.value);
+                // setPrice(event.target.value);
+                handleChange("price", event.target.value);
               }}
             />{" "}
             €
@@ -207,9 +222,10 @@ const Publish = ({
             <input
               type="checkbox"
               id="exchange"
-              value={exchange}
+              value={params.exchange}
               onChange={() => {
-                setExchange(!exchange);
+                // setExchange(!exchange);
+                handleChange("exchange", !params.exchange);
               }}
             />
             <label htmlFor="exchange">
@@ -222,18 +238,8 @@ const Publish = ({
             className="button-type-2"
             type="submit"
             onClick={(event) => {
-              event.preventDefault();
-              console.log({
-                title,
-                description,
-                brand,
-                size,
-                color,
-                condition,
-                city,
-                price,
-                exchange,
-              });
+              // event.preventDefault();
+              handleSubmit(event);
             }}
           >
             Ajouter
@@ -245,3 +251,48 @@ const Publish = ({
 };
 
 export default Publish;
+
+// const [title, setTitle] = useState("");
+// const [description, setDescription] = useState("");
+// const [brand, setBrand] = useState("");
+// const [size, setSize] = useState("");
+// const [color, setColor] = useState("");
+// const [condition, setCondition] = useState("");
+// const [city, setCity] = useState("");
+// const [price, setPrice] = useState("");
+// const [exchange, setExchange] = useState(false);
+
+// if (errorLoading) {
+//   return (
+//     <div className="isLoading-error">
+//       Oups ! Quelque chose n'a pas fonctionné...
+//     </div>
+//   );
+// }
+
+// if (isLoading) {
+//   return <div className="isLoading">Chargement...</div>;
+// }
+
+// useEffect(() => {
+//   function isAuthentified() {
+//     if (!token) {
+//       navigate("/");
+//     }
+//   }
+//   isAuthentified();
+// }, [token, navigate, setUserModalVisible, userModalVisible]);
+
+// let { title, description, price, condition, city, brand, size, color } =
+//   params;
+//
+// if (Object.values(params).includes("")) {
+//   let emptyKeys = [];
+//   Object.keys(params).forEach((key) => {
+//     if (params[key] === "") {
+//       emptyKeys.push(key);
+//     }
+//   });
+//   window.alert("Tu n'as pas rempli les champs suivants :\n" + emptyKeys);
+//   return;
+// }

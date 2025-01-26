@@ -4,14 +4,16 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 import formatPrice from "../assets/tools/formatPrice";
 
-const Offer = () => {
+const Offer = (props) => {
+  const location = useLocation();
+
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const [errorLoading, setErrorLoading] = useState(false);
+  const [errorLoading, setErrorLoading] = useState(null);
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -20,29 +22,34 @@ const Offer = () => {
         const response = await axios.get(
           `https://lereacteur-vinted-api.herokuapp.com/offer/${id}`
         );
-
+        if (response.data === null) {
+          throw new Error("L'annonce demandée n'existe pas.");
+        }
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
-        setErrorLoading(true);
+        setErrorLoading(error.message);
         setIsLoading(false);
       }
     }
     getData();
   }, [id]);
 
-  if (errorLoading) {
-    return (
-      <div className="isLoading-error">
-        Oups ! Quelque chose n'a pas fonctionné...
-      </div>
-    );
-  }
-
   if (isLoading) {
     return <div className="isLoading">Chargement...</div>;
   }
-
+  if (errorLoading) {
+    return (
+      <>
+        <Link to="/">
+          <div className="offer-back-button">
+            <button className="button-type-1">Retour</button>
+          </div>
+        </Link>
+        <div className="loading-error">{errorLoading}</div>
+      </>
+    );
+  }
   return (
     <div className="offer-page-container">
       <Link to="/">
@@ -50,6 +57,7 @@ const Offer = () => {
           <button className="button-type-1">Retour</button>
         </div>
       </Link>
+      {location.state?.newOffer && <div>Ton annonce est en ligne 😎 !</div>}
       <div className="offer-main-picture">
         <img src={data.product_image.secure_url} alt={data.product_name} />
       </div>
@@ -80,9 +88,13 @@ const Offer = () => {
 
           <div className="offer-owner-section">
             <div className="offer-owner-avatar">
-              <img src={data.owner.account.avatar.secure_url} alt="" />
+              {data.owner.account.avatar && (
+                <img src={data.owner.account.avatar.secure_url} alt="" />
+              )}
             </div>
-            <div className="offer-owner-username">Nolla</div>
+            <div className="offer-owner-username">
+              {data.owner.account.username}
+            </div>
           </div>
         </div>
       </div>

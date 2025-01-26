@@ -20,13 +20,41 @@ import {
   faPlus,
   faSquarePlus,
   faMagnifyingGlass,
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faUser, faPlus, faSquarePlus, faMagnifyingGlass);
-
-console.log("rendring App");
+library.add(
+  faUser,
+  faPlus,
+  faSquarePlus,
+  faMagnifyingGlass,
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight
+);
 
 function App() {
-  const [showSearchFilters, setShowSearchFilters] = useState();
+  const [query, setQuery] = useState("");
+  const [queryFilters, setQueryFilters] = useState({
+    title: "",
+    priceRange: [0, 1000],
+    sort: "price-asc",
+    page: "1",
+    limit: "6",
+  });
+  function setQueryFilterValue(filter, value) {
+    // console.log(filter, "is", queryFilters[filter]);
+    // console.log("Setting", filter, "to", value);
+
+    const updatedQueryFilters = { ...queryFilters };
+    updatedQueryFilters[filter] = value;
+    setQueryFilters(updatedQueryFilters);
+  }
+
+  const [showQueryFilters, setShowQueryFilters] = useState();
   const [userModalVisible, setUserModalVisible] = useState(false);
   const [mustRefresh, setMustRefresh] = useState(false);
 
@@ -40,30 +68,53 @@ function App() {
     <Router>
       <div className="app">
         <Header
-          showSearchFilters={showSearchFilters}
-          setShowSearchFilters={setShowSearchFilters}
+          showQueryFiltersState={{
+            showQueryFilters,
+            setShowQueryFilters,
+            setQueryFilterValue,
+          }}
           setUserModalVisible={setUserModalVisible}
+          queryFiltersState={{
+            queryFilters,
+            setQueryFilters,
+            setQueryFilterValue,
+          }}
+          queryState={{ query, setQuery }}
         />
         <Routes>
           <Route
             path="/"
-            element={<Home setShowSearchFilters={setShowSearchFilters} />}
+            element={
+              <Home
+                setShowQueryFilters={setShowQueryFilters}
+                query={query}
+                queryFiltersState={{
+                  queryFilters,
+                  setQueryFilters,
+                  setQueryFilterValue,
+                }}
+              />
+            }
           />
           <Route
             path="/offers/:id"
-            element={<Offer setShowSearchFilters={setShowSearchFilters} />}
+            // element={<Offer setShowQueryFilters={setShowQueryFilters} />}
+            element={<Offer />}
           />
           <Route
             path="/publish"
             element={
               token ? (
                 <Publish
-                  setShowSearchFilters={setShowSearchFilters}
+                  setShowQueryFilters={setShowQueryFilters}
                   userModalVisible={userModalVisible}
                   setUserModalVisible={setUserModalVisible}
                 />
               ) : (
-                <Home setShowSearchFilters={setShowSearchFilters} />
+                <Home
+                  setShowQueryFilters={setShowQueryFilters}
+                  queryFiltersState={{ queryFilters, setQueryFilters }}
+                />
               )
             }
           />

@@ -1,21 +1,37 @@
-import { Link } from "react-router-dom";
-import BannerSection from "../comp/BannerSection";
-import axios from "axios";
+import { createPath, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
+
+import BannerSection from "../comp/BannerSection";
+import Pagination from "../comp/Pagination";
+
 import formatPrice from "../assets/tools/formatPrice";
 
-const Home = ({ setShowSearchFilters }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const Home = (props) => {
+  const { setShowQueryFilters, queryFiltersState } = props;
+
+  const { queryFilters, setQueryFilters, setQueryFilterValue } =
+    props.queryFiltersState;
+
+  const { title, priceRange, sort, page, limit } = queryFilters;
+  // console.log(queryFilte  rs);
+
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
-    setShowSearchFilters(true);
+    setShowQueryFilters(true);
     async function getData() {
+      console.log("Fetching data...");
+      console.log("Query is:", title);
       try {
         let response = await axios.get(
-          "https://lereacteur-vinted-api.herokuapp.com/offers"
+          `https://lereacteur-vinted-api.herokuapp.com/offers?title=${title}&sort=${sort}&page=${page}&limit=${limit}&priceMin=${priceRange[0]}&priceMax=${priceRange[1]}`
         );
+        console.log("Data received:", response.data?.count, "offers");
 
         setData(response.data);
         setIsLoading(false);
@@ -25,12 +41,17 @@ const Home = ({ setShowSearchFilters }) => {
         setIsLoading(false);
       }
     }
+
     getData();
 
     return () => {
-      setShowSearchFilters(false);
+      setShowQueryFilters(false);
     };
-  }, [setShowSearchFilters]);
+  }, [setShowQueryFilters, title, page, limit, sort, priceRange]);
+
+  useEffect(() => {
+    data && setQueryFilterValue("page", 1);
+  }, [title, sort, priceRange, limit]);
 
   if (errorLoading) {
     return <div className="isLoading-error">Error Loading content</div>;
@@ -38,6 +59,14 @@ const Home = ({ setShowSearchFilters }) => {
 
   if (isLoading) {
     return <div className="isLoading">Loading content...</div>;
+  }
+
+  if (data.count === 0) {
+    return (
+      <div className="no-results">
+        <p>Aucun résultat</p>
+      </div>
+    );
   }
 
   return (
@@ -99,6 +128,12 @@ const Home = ({ setShowSearchFilters }) => {
             );
           })}
         </div>
+        {data.count > limit && (
+          <Pagination
+            queryFiltersState={queryFiltersState}
+            count={data.count}
+          />
+        )}
       </div>
     </div>
   );
