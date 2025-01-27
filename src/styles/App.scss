@@ -92,7 +92,7 @@ button {
     color: var(--font-color-3);
     flex-grow: 0;
     padding: 0;
-    border: 1px solid #000;
+    // border: 1px solid #000;
   }
 }
 
@@ -133,7 +133,7 @@ button {
   flex-direction: row;
   justify-content: space-between;
   gap: 3dvw;
-  border: 1px solid #000;
+  // border: 1px solid #000;
 }
 
 .sort-by-price-switch {
@@ -142,11 +142,11 @@ button {
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  border: 1px solid #000;
+  // border: 1px solid #000;
 }
 
 .price-range-bar {
-  border: 1px solid #000;
+  // border: 1px solid #000;
   // min-width: 40px;
   flex-basis: 100%;
   display: flex;

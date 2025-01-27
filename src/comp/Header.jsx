@@ -187,21 +187,25 @@ const Header = (props) => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        boxShadow: "0px 2px 6px #AAA",
+                        boxShadow: "0px 2px 6px #d3d3d3",
                       }}
                     >
                       <div
                         style={{
                           position: "absolute",
-                          top: "-28px",
-                          color: " #07a0a8",
-                          fontWeight: "bold",
-                          fontSize: "14px",
+                          top: "-2.5em",
+                          color: " #ffffff",
+                          // fontWeight: "bold",
+                          // fontSize: "14px",
                           fontFamily:
                             "Arial,Helvetica Neue,Helvetica,sans-serif",
-                          padding: "4px",
+                          padding: "0.3em",
                           borderRadius: "4px",
-                          backgroundColor: "#var(--bg-color-3a)",
+                          backgroundColor: "#07a0a8",
+                          width: "fit-content",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
                         {newPriceRange[index].toFixed(0) + " €"}
