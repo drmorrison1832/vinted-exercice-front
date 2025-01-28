@@ -153,10 +153,14 @@ button {
 
 .arrow-up,
 .arrow-down {
+  display: flex;
+  font-size: 1.2em;
   height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   padding-top: 2px;
-  text-align: center;
-  color: var(--font-color-5);
+  color: var(--font-color-3);
 }
 
 .price-range-bar-container {
@@ -167,7 +171,6 @@ button {
   align-items: center;
   flex-grow: 1;
   gap: 10px;
-  // border: 1px solid red;
   padding-left: 1em;
 }
 .range {

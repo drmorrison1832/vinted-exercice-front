@@ -8,6 +8,7 @@ import Header from "./comp/Header";
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 import Publish from "./pages/Publish";
+import Payment from "./pages/payment";
 
 import UserConnectionModal from "./modals/UserConnectionModal";
 
@@ -123,6 +124,7 @@ function App() {
               )
             }
           />
+          <Route path="/payment" element={<Payment />}></Route>
         </Routes>
 
         {userModalVisible && (

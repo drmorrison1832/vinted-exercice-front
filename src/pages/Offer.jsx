@@ -10,7 +10,7 @@ import formatPrice from "../assets/utils/formatPrice";
 
 const Offer = (props) => {
   const location = useLocation();
-
+  ƒ;
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [errorLoading, setErrorLoading] = useState(null);

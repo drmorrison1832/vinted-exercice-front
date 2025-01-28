@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Cookie from "js-cookie";
 import Switch from "react-switch";
 import { Range, getTrackBackground } from "react-range";
 
@@ -70,16 +69,8 @@ const Header = (props) => {
               <div className="switch">
                 <Switch
                   id="sort"
-                  uncheckedIcon={
-                    <div className="arrow-down">
-                      <FontAwesomeIcon icon="fa-solid fa-arrow-down" />
-                    </div>
-                  }
-                  checkedIcon={
-                    <div className="arrow-up">
-                      <FontAwesomeIcon icon="fa-solid fa-arrow-up" />
-                    </div>
-                  }
+                  uncheckedIcon={null}
+                  checkedIcon={null}
                   handleDiameter={18}
                   offColor="#07a0a8"
                   onColor="#07a0a8"
@@ -89,6 +80,16 @@ const Header = (props) => {
                     handleSwitch();
                   }}
                   checked={queryFilters.sort === "price-asc"}
+                  uncheckedHandleIcon={
+                    <div className="arrow-up">
+                      <FontAwesomeIcon icon="fa-solid fa-arrow-down" />
+                    </div>
+                  }
+                  checkedHandleIcon={
+                    <div className="arrow-up">
+                      <FontAwesomeIcon icon="fa-solid fa-arrow-up" />
+                    </div>
+                  }
                 />
               </div>
             </div>
