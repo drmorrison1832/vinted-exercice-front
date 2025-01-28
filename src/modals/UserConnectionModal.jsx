@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookie from "js-cookie";
+
+import { handleUserCookie } from "../assets/utils/handleUserCookie";
+
+// import Cookie from "js-cookie";
 
 import Login from "./Login";
 import Signup from "./Signup";
@@ -8,7 +11,9 @@ import Signup from "./Signup";
 import axios from "axios";
 
 const UserConnectionModal = ({ setUserModalVisible, setMustRefresh }) => {
-  const token = Cookie.get("token");
+  // const userStr = Cookie.get("userObj");
+  // const userObj = userStr ? JSON.parse(userStr) : null;
+  const userObj = handleUserCookie.get();
 
   // Possible values: LoginOrSignup, Login, SignupLogout, ErrorUnknown
   const [connectionModalToRender, setConnectionModalToRender] = useState();
@@ -22,39 +27,18 @@ const UserConnectionModal = ({ setUserModalVisible, setMustRefresh }) => {
 
   useEffect(
     function setInitialConnectionModalToRender() {
-      if (!token) {
-        setConnectionModalToRender("LoginOrSignup");
-      } else {
+      if (userObj) {
         setConnectionModalToRender("Logout");
+      } else {
+        setConnectionModalToRender("LoginOrSignup");
       }
     },
-    [token]
+    [userObj]
   );
-
-  async function handleConnection(event) {
-    event.preventDefault();
-    try {
-      let response = await axios.post(
-        "https://lereacteur-vinted-api.herokuapp.com/user/login",
-        {
-          email: "fmorri@gmail.com",
-          password: "vinted",
-        }
-      );
-
-      Cookie.set("token", response.data.token);
-      Cookie.set("username", response.data.account.username);
-      setUserModalVisible(false);
-      navigate("/");
-    } catch (error) {
-      setConnectionModalToRender("ErrorUnknown");
-    }
-  }
 
   function handleDisconnect(event) {
     event.preventDefault();
-    Cookie.remove("token");
-    Cookie.remove("username");
+    handleUserCookie.clear();
     setUserModalVisible(false);
     navigate("/");
   }

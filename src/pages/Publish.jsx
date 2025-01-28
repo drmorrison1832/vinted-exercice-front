@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 
-import Cookies from "js-cookie";
+import { handleUserCookie } from "../assets/utils/handleUserCookie";
 
 import axios from "axios";
 
@@ -31,9 +31,8 @@ const Publish = ({
 
   const navigate = useNavigate();
 
-  const token = Cookies.get("token");
-
-  if (!token) {
+  const userObj = handleUserCookie.get();
+  if (!userObj) {
     navigate("/");
   }
 
@@ -72,7 +71,7 @@ const Publish = ({
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
         formData,
-        { headers: { authorization: `Bearer ${token}` } }
+        { headers: { authorization: `Bearer ${userObj.token}` } }
       );
       setData(response.data);
       setIsLoading(false);

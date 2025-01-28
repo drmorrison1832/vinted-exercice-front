@@ -25,6 +25,8 @@
   color: var(--font-color-1);
   font-family: var(--main-font-family);
   background-color: var(--bg-color-1);
+
+  // position: relative;
 }
 
 :root::before {
@@ -38,10 +40,11 @@
 }
 
 html {
-  max-width: 600px;
 }
 
 body {
+  margin: 0 auto 0 auto;
+  max-width: 600px;
   position: relative;
 }
 
@@ -136,29 +139,42 @@ button {
   // border: 1px solid #000;
 }
 
-.sort-by-price-switch {
+.sort-by-price-switch-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+}
+
+.switch {
   // border: 1px solid #000;
 }
 
-.price-range-bar {
-  // border: 1px solid #000;
-  // min-width: 40px;
+.arrow-up,
+.arrow-down {
+  height: 100%;
+  padding-top: 2px;
+  text-align: center;
+  color: var(--font-color-5);
+}
+
+.price-range-bar-container {
   flex-basis: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   flex-grow: 1;
   gap: 10px;
-  div {
-    // border: 1px solid #000;
-    width: 100%;
-  }
+  // border: 1px solid red;
+  padding-left: 1em;
+}
+.range {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 20px;
 }
 
 .pagination {
@@ -235,6 +251,7 @@ button {
   left: 0;
   width: 100dvw;
   height: 100dvh;
+  max-width: 600px;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -242,6 +259,7 @@ button {
 }
 
 .connection-modal-window {
+  max-width: 90%;
   background: var(--bg-color-1);
   border-radius: 5px;
   font-size: 1.5em;
@@ -602,77 +620,77 @@ button {
   }
 }
 
-// @media (min-width: 768px) {
-//   :root::before {
-//     content: "[tablet]";
-//   }
+@media (min-width: 768px) {
+  :root::before {
+    content: "[tablet]";
+  }
 
-//   .header {
-//     gap: 6dvw;
+  // .header {
+  //   gap: 6dvw;
 
-//     .header-mobile-only {
-//       display: none;
-//     }
-//     .header-desktop-only {
-//       display: flex;
-//     }
-//   }
+  //   .header-mobile-only {
+  //     display: none;
+  //   }
+  //   .header-desktop-only {
+  //     display: flex;
+  //   }
+  // }
 
-//   .offer-card {
-//     flex-basis: 26dvw;
-//   }
+  // .offer-card {
+  //   flex-basis: 26dvw;
+  // }
 
-//   .card-image {
-//     // height: 70dvw;
-//     width: 100%;
-//     aspect-ratio: 3 / 4;
+  // .card-image {
+  //   // height: 70dvw;
+  //   width: 100%;
+  //   aspect-ratio: 3 / 4;
 
-//     overflow: hidden;
-//     display: flex;
-//     img {
-//       width: 100%;
-//       object-fit: cover;
-//       object-position: center;
-//     }
-//   }
-// }
+  //   overflow: hidden;
+  //   display: flex;
+  //   img {
+  //     width: 100%;
+  //     object-fit: cover;
+  //     object-position: center;
+  //   }
+  // }
+}
 
-// @media (min-width: 940px) {
-//   :root::before {
-//     content: "[small-desktop]";
-//   }
+@media (min-width: 940px) {
+  :root::before {
+    content: "[small-desktop]";
+  }
 
-//   .quick-search-filters {
-//     gap: 4dvw;
-//   }
+  //   .quick-search-filters {
+  //     gap: 4dvw;
+  //   }
 
-//   .sort-by-price-switch {
-//     flex-direction: row;
-//     flex-wrap: nowrap;
-//     gap: 15px;
-//   }
+  //   .sort-by-price-switch {
+  //     flex-direction: row;
+  //     flex-wrap: nowrap;
+  //     gap: 15px;
+  //   }
 
-//   .price-range-bar {
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-between;
-//     flex-grow: 1;
-//   }
+  //   .price-range-bar {
+  //     display: flex;
+  //     flex-direction: row;
+  //     justify-content: space-between;
+  //     flex-grow: 1;
+  //   }
 
-//   .offer-card {
-//     flex-basis: 21%;
-//   }
-// }
+  //   .offer-card {
+  //     flex-basis: 21%;
+  //   }
+}
 
-// @media (min-width: 1124px) {
-//   :root::before {
-//     content: "[desktop]";
-//   }
-// }
+@media (min-width: 1124px) {
+  :root::before {
+    content: "[desktop]";
+  }
+}
 
-// /* Extra extra large devices (large desktops, 1400px and up) */
-// @media (min-width: 1400px) {
-//   :root::before {
-//     content: "[large-desktop]";
-//   }
-// }
+/* Extra extra large devices (large desktops, 1400px and up) */
+@media (min-width: 1400px) {
+  :root::before {
+    content: "[large-desktop]";
+  }
+}

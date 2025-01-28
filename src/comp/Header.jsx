@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Cookies from "js-cookie";
+// import Cookie from "js-cookie";
 import Switch from "react-switch";
 import { Range, getTrackBackground } from "react-range";
 
 import { useState, useEffect } from "react";
+
+import { handleUserCookie } from "../assets/utils/handleUserCookie";
 
 const Header = (props) => {
   const { queryFilters, setQueryFilters } = props.queryFiltersState;
@@ -16,14 +18,14 @@ const Header = (props) => {
 
   const [newPriceRange, setNewPriceRange] = useState([0, 1000]);
 
-  const token = Cookies.get("token");
-  const username = Cookies.get("username");
+  const userObj = handleUserCookie.get();
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("Debouncing...");
     const debounceUpdateTitle = setTimeout(() => {
-      console.log("Debouncing...");
+      console.log("Debounced");
       const updatedQueryFilters = { ...queryFilters };
       updatedQueryFilters.title = newTitle;
       setQueryFilters(updatedQueryFilters);
@@ -38,11 +40,6 @@ const Header = (props) => {
       setQueryFilterValue("sort", "price-desc");
     queryFilters.sort === "price-desc" &&
       setQueryFilterValue("sort", "price-asc");
-  }
-
-  function handleRange() {
-    // console.log(newPriceRange);
-    setQueryFilterValue("priceRange", newPriceRange);
   }
 
   return (
@@ -68,13 +65,21 @@ const Header = (props) => {
 
         {showQueryFilters && (
           <div className="quick-search-filters">
-            <div className="sort-by-price-switch">
+            <div className="sort-by-price-switch-container">
               <div>Trier par prix</div>
-              <div>
+              <div className="switch">
                 <Switch
                   id="sort"
-                  uncheckedIcon={false}
-                  checkedIcon={false}
+                  uncheckedIcon={
+                    <div className="arrow-down">
+                      <FontAwesomeIcon icon="fa-solid fa-arrow-down" />
+                    </div>
+                  }
+                  checkedIcon={
+                    <div className="arrow-up">
+                      <FontAwesomeIcon icon="fa-solid fa-arrow-up" />
+                    </div>
+                  }
                   handleDiameter={18}
                   offColor="#07a0a8"
                   onColor="#07a0a8"
@@ -86,70 +91,28 @@ const Header = (props) => {
                   checked={queryFilters.sort === "price-asc"}
                 />
               </div>
-              {/* <div>
-                  <input
-                    name="sort"
-                    type="radio"
-                    id="asc"
-                    checked={queryFilters.sort === "price-asc"}
-                    onChange={(event) => {
-                      setQueryFilterValue("sort", "price-asc");
-                    }}
-                  />
-                  <label htmlFor="asc">Ascendant</label>
-                </div>
-                <div>
-                  <input
-                    name="sort"
-                    type="radio"
-                    id="desc"
-                    checked={queryFilters.sort !== "price-asc"}
-                    onChange={() => {
-                      setQueryFilterValue("sort", "price-desc");
-                    }}
-                  />
-                  <label htmlFor="desc">Descendant</label>
-                </div> */}
             </div>
 
-            <div className="price-range-bar">
+            <div className="price-range-bar-container">
               <div>Prix entre :</div>
-              <div>
+              <div className="range">
                 <Range
-                  label="Select your value"
+                  label=""
                   step={1}
                   min={0}
                   max={1000}
                   values={newPriceRange}
                   onChange={(values) => {
-                    // console.log(values);
                     setNewPriceRange(values);
                   }}
-                  onFinalChange={(values) => {
-                    // console.log(values);
-                    handleRange();
+                  onFinalChange={() => {
+                    setQueryFilterValue("priceRange", newPriceRange);
                   }}
-                  // renderTrack={({ props, children }) => (
-                  //   <div
-                  //     {...props}
-                  //     style={{
-                  //       ...props.style,
-                  //       height: "6px",
-                  //       width: "100%",
-                  //       // backgroundColor: "#07a0a8",
-                  //       borderWidth: "0",
-                  //     }}
-                  //   >
-                  //     {children}
-                  //   </div>
-                  // )}
                   renderTrack={({ props, children }) => (
                     <div
-                      onMouseDown={props.onMouseDown}
-                      onTouchStart={props.onTouchStart}
+                      onMouseDown={() => {}}
                       style={{
-                        ...props.style,
-                        height: "36px",
+                        height: "30px",
                         display: "flex",
                         width: "100%",
                       }}
@@ -180,8 +143,8 @@ const Header = (props) => {
                       key={props.key}
                       style={{
                         ...props.style,
-                        height: "2em",
-                        width: "2em",
+                        height: "20px",
+                        width: "20px",
                         borderRadius: "50%",
                         backgroundColor: " #07a0a8",
                         display: "flex",
@@ -193,13 +156,13 @@ const Header = (props) => {
                       <div
                         style={{
                           position: "absolute",
-                          top: "-2.5em",
+                          top: "-2.1em",
                           color: " #ffffff",
                           // fontWeight: "bold",
                           // fontSize: "14px",
                           fontFamily:
                             "Arial,Helvetica Neue,Helvetica,sans-serif",
-                          padding: "0.3em",
+                          padding: "0.2em 0.4em",
                           borderRadius: "4px",
                           backgroundColor: "#07a0a8",
                           width: "fit-content",
@@ -227,14 +190,14 @@ const Header = (props) => {
       </div>
 
       <div className="header-user-zone">
-        {username ? (
+        {userObj ? (
           <div
             className="header-username"
             onClick={() => {
               setUserModalVisible(true);
             }}
           >
-            {username}
+            {userObj.username}
           </div>
         ) : (
           <div className="header-username">Commence à vendre</div>
@@ -252,7 +215,7 @@ const Header = (props) => {
             className="icon-start-posting icon-type-1"
             icon="fa-solid fa-plus"
             onClick={() => {
-              if (token) {
+              if (userObj) {
                 setShowQueryFilters(false);
                 navigate("/publish");
               } else setUserModalVisible(true);
@@ -270,3 +233,30 @@ const Header = (props) => {
 };
 
 export default Header;
+
+{
+  /* <div>
+                  <input
+                    name="sort"
+                    type="radio"
+                    id="asc"
+                    checked={queryFilters.sort === "price-asc"}
+                    onChange={(event) => {
+                      setQueryFilterValue("sort", "price-asc");
+                    }}
+                  />
+                  <label htmlFor="asc">Ascendant</label>
+                </div>
+                <div>
+                  <input
+                    name="sort"
+                    type="radio"
+                    id="desc"
+                    checked={queryFilters.sort !== "price-asc"}
+                    onChange={() => {
+                      setQueryFilterValue("sort", "price-desc");
+                    }}
+                  />
+                  <label htmlFor="desc">Descendant</label>
+                </div> */
+}

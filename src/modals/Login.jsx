@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Cookie from "js-cookie";
+
+import { handleUserCookie } from "../assets/utils/handleUserCookie";
 
 const Login = ({
   setConnectionModalToRender,
@@ -31,10 +32,12 @@ const Login = ({
         }
       );
 
-      Cookie.set("token", response.data.token);
-      Cookie.set("username", response.data.account.username);
+      const userObj = handleUserCookie.set(
+        response.data.account.username,
+        response.data.token
+      );
+
       setUserModalVisible(false);
-      // navigate("/");
       setMustRefresh(true);
     } catch (error) {
       console.log(error);

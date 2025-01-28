@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { useParams, useLocation } from "react-router-dom";
 
-import formatPrice from "../assets/tools/formatPrice";
+import formatPrice from "../assets/utils/formatPrice";
 
 const Offer = (props) => {
   const location = useLocation();

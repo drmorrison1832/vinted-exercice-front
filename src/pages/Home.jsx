@@ -1,11 +1,11 @@
-import { createPath, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 import BannerSection from "../comp/BannerSection";
 import Pagination from "../comp/Pagination";
 
-import formatPrice from "../assets/tools/formatPrice";
+import formatPrice from "../assets/utils/formatPrice";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

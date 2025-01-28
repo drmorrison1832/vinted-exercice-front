@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Cookie from "js-cookie";
 
+import { handleUserCookie } from "../assets/utils/handleUserCookie";
+
 const Signup = ({
   setConnectionModalToRender,
   setUserModalVisible,
@@ -31,17 +33,16 @@ const Signup = ({
         newsletter,
       };
 
-      // window.alert(JSON.stringify(newUser));
-
       let response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/user/signup",
         newUser
       );
 
-      console.log(response);
+      const userObj = handleUserCookie.set(
+        response.data.account.username,
+        response.data.token
+      );
 
-      Cookie.set("token", response.data.token);
-      Cookie.set("username", response.data.account.username);
       setUserModalVisible(false);
       navigate("/");
       setMustRefresh(true);

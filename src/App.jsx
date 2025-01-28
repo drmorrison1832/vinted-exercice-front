@@ -11,7 +11,7 @@ import Publish from "./pages/Publish";
 
 import UserConnectionModal from "./modals/UserConnectionModal";
 
-import Cookies from "js-cookie";
+import Cookie from "js-cookie";
 
 // Icons
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -24,6 +24,8 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faArrowUp,
+  faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faUser,
@@ -33,7 +35,9 @@ library.add(
   faAngleLeft,
   faAngleRight,
   faAnglesLeft,
-  faAnglesRight
+  faAnglesRight,
+  faArrowUp,
+  faArrowDown
 );
 
 function App() {
@@ -58,7 +62,8 @@ function App() {
   const [userModalVisible, setUserModalVisible] = useState(false);
   const [mustRefresh, setMustRefresh] = useState(false);
 
-  const token = Cookies.get("token");
+  // const token = Cookie.get("token");
+  const userObj = Cookie.get("userObj");
 
   useEffect(() => {
     return setMustRefresh(false);
@@ -104,7 +109,7 @@ function App() {
           <Route
             path="/publish"
             element={
-              token ? (
+              userObj ? (
                 <Publish
                   setShowQueryFilters={setShowQueryFilters}
                   userModalVisible={userModalVisible}
